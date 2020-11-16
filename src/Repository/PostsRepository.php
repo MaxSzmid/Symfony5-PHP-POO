@@ -23,11 +23,19 @@ class PostsRepository extends ServiceEntityRepository
     // * @return Posts [] return an array of Posts without trash data.
     // */
 
+    /* este da los datos
     public function getAllPosts()
     {
         return $this->getEntityManager()->createQuery(
             'SELECT p.id, p.titulo, p.foto, p.fecha_publicacion FROM App:Posts p'
         )->getResult();
+    }*/
+    //este envia la query unicamente
+    public function getAllPostsQuery()
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT p.id, p.titulo, p.foto, p.fecha_publicacion FROM App:Posts p'
+        );
     }
 
     // /**

@@ -3,19 +3,35 @@
 {% block title %}Hello DashboardController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{# total items count #}
+<div class="count">
+    {{ pagination.getTotalItemCount }}
 </div>
+<table>
+    <tr>
+        {# sorting of properties based on query components #}
+        <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+        <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>
+            {{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}
+        </th>
+        <th{% if pagination.isSorted(['a.date', 'a.time']) %} class="sorted"{% endif %}>
+            {{ knp_pagination_sortable(pagination, 'Release', ['a.date', 'a.time']) }}
+        </th>
+    </tr>
 
-<div>
-    <a type="button" href="posts"> ir a post</a>
+    {# table body #}
+    {% for article in pagination %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <td>{{ article.id }}</td>
+            <td>{{ article.titulo }}</td>
+            <td>{{ article.foto }}</td>
+            <td>{{ article.fecha_publicacion | date('Y-m-d') }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
 </div>
-
-    {{ dump(posts) }}
 
 {% endblock %}
