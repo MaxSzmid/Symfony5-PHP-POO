@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Posts;
+use Symfony\Component\Console\Style\OutputStyle;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -19,7 +19,7 @@ class PostsRepository extends ServiceEntityRepository
         parent::__construct($registry, Posts::class);
     }
 
-   // /**
+    // /**
     // * @return Posts [] return an array of Posts without trash data.
     // */
 
@@ -34,9 +34,23 @@ class PostsRepository extends ServiceEntityRepository
     public function getAllPostsQuery()
     {
         return $this->getEntityManager()->createQuery(
-            'SELECT p.id, p.titulo, p.foto, p.fecha_publicacion FROM App:Posts p'
+            'SELECT p.id, p.titulo, p.foto, p.fecha_publicacion, u.name 
+             FROM App:Posts p
+             JOIN p.user u'
         );
     }
+
+    public function getPost($id)
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT p.id, p.titulo, p.likes, p.foto, p.fecha_publicacion, p.contenido, u.name 
+             FROM App:Posts p
+             JOIN p.user u
+             WHERE p.id='."$id"
+        )->execute();
+    }
+
+
 
     // /**
     //  * @return Posts[] Returns an array of Posts objects

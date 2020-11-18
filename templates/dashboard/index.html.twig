@@ -1,37 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}{{parent()}} Dashboard{% endblock %}
 
 {% block body %}
-{# total items count #}
-<div class="count">
-    {{ pagination.getTotalItemCount }}
+{{parent()}} <br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            {% for article in pagination %}
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-6">{{ article.titulo }}</div>
+                        <div class="col-6 text-right">Date:
+                            {{article.fecha_publicacion | date('d/m/Y:m') }}</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>@Author: {{ article.name }}</p>
+                        <div class="col-3">
+                            <a href="{{path('verPost',{id:article.id})}}"
+                                class="btn btn-info btn-block">Go to post</a>
+                        </div>
+                    </blockquote>
+                </div>
+            </div>
+            <br><br>
+            {% if true ==false %}
+            {{ article.foto }}
+            {% endif %}
+            {% endfor %}
+            {# display navigation #}
+        </div>
+    </div>
 </div>
-<table>
-    <tr>
-        {# sorting of properties based on query components #}
-        <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
-        <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>
-            {{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}
-        </th>
-        <th{% if pagination.isSorted(['a.date', 'a.time']) %} class="sorted"{% endif %}>
-            {{ knp_pagination_sortable(pagination, 'Release', ['a.date', 'a.time']) }}
-        </th>
-    </tr>
-
-    {# table body #}
-    {% for article in pagination %}
-        <tr {% if loop.index is odd %}class="color"{% endif %}>
-            <td>{{ article.id }}</td>
-            <td>{{ article.titulo }}</td>
-            <td>{{ article.foto }}</td>
-            <td>{{ article.fecha_publicacion | date('Y-m-d') }}</td>
-        </tr>
-    {% endfor %}
-</table>
-{# display navigation #}
-<div class="navigation">
+<div class="pagination justify-content-center">
     {{ knp_pagination_render(pagination) }}
 </div>
-
 {% endblock %}

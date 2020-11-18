@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
     /**
-     * @Route("/", name="dashboard")
+     * @Route("/dashboard", name="dashboard")
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
@@ -23,7 +23,7 @@ class DashboardController extends AbstractController
         $pagination = $paginator->paginate(
             $query, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            /*limit per page*/
+            3 /*limit per page*/
         );
 
         return $this->render(

@@ -35,5 +35,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        #EXAMPLE - { path: ^/admin, roles: ROLE_ADMIN }
+        #EXAMPLE - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/dashboard, roles: [ROLE_USER,ROLE_ADMIN] }
+        - { path: ^/verPost, roles: [ROLE_USER,ROLE_ADMIN] }
+        - { path: ^/posts, roles: [ROLE_USER,ROLE_ADMIN] }
+
+
+        

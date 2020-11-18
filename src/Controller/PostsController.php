@@ -69,7 +69,7 @@ class PostsController extends AbstractController
     public function verPost($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository(Posts::class)->find($id);
+        $post = $em->getRepository(Posts::class)->getPost($id);
         return $this->render('posts/verPost.html.twig', ['post' => $post]);
     }
 
