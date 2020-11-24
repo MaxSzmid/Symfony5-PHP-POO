@@ -1,18 +1,25 @@
 {% extends 'base.html.twig' %}
 {% block body %} {{parent()}}
-{% for p in post %}
+
 <div class="container">
     <div class="col-12">
         <div class="card">
-            <div class="card-header bg-secondary text-white">Post Owner: {{p.name}} <span
+            {% for p in post %}
+            <div class="card-header bg-secondary text-white">Post Owner:
+                {{p.name}} <span
                     class="float-right">Date: {{p.fecha_publicacion | date}}</span></div>
             <div class="card-body bg-light">
                 <h5 class="card-title">{{p.titulo}}</h5>
                 <p class="card-text">- {{p.contenido}}</p>
             </div>
+            {% endfor %}
         </div>
     </div>
-</div>
+    <hr class="my-3">
 
-{% endfor %}
+    <div class="col-12">
+        <h2> {{form(form)}}</h2>
+    </div>
+
+</div>
 {% endblock %}

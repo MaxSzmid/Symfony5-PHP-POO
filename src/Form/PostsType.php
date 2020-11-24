@@ -17,25 +17,26 @@ class PostsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titulo')
-            ->add('fecha_publicacion')
+            ->add('titulo', null, [
+                'label' => 'Titulo del articulo'
+            ])
             ->add('foto', FileType::class, [
-                'label' => 'Seleccione una imagen ',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
+                            'application/jpg',
+                            'application/png',
                         ],
-                        'mimeTypesMessage' => 'Porfavor Subi un archivo .PDF o X-PDF',
+                        'mimeTypesMessage' => 'Please Upload an archive such as .jpg o .png extension, we can not ulpolad your archive',
+                        'maxSizeMessage' => 'El archivo es demasiado grande para poder guardarlo, el tamaño maximo es de 1024k.'
                     ])
                 ],
             ])
             ->add('contenido', TextareaType::class)
-            ->add('Guardar', SubmitType::class);
+            ->add('guardar', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comments;
 use App\Entity\Posts;
+use App\Form\CommentType;
 use App\Form\PostsType;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,6 +49,9 @@ class PostsController extends AbstractController
                     throw new Exception("Algo salio mal y exploto todo");
                 }
                 $post->setFoto($newFileName);
+                $date = date_create();
+                $cadena_fecha_actual = date_create_from_format($date, 'Y-m-d H:i:s');
+                $post->setFechaPublicacion($cadena_fecha_actual);
             }
             $user = $this->getUser();
             $post->setUser($user);
@@ -66,11 +71,17 @@ class PostsController extends AbstractController
     /**
      * @Route("/verPost/{id}", name="verPost")
      */
-    public function verPost($id)
+    public function verPost($id, Request $request)
     {
+        $comment = new Comments();
+        $formComment = $this->createForm(CommentType::class, $comment);
+        $formComment->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository(Posts::class)->getPost($id);
-        return $this->render('posts/verPost.html.twig', ['post' => $post]);
+        $postQueryResults = $em->getRepository(Posts::class)->getPost($id);
+        return $this->render('posts/verPost.html.twig', [
+            'post' => $postQueryResults,
+            'form' => $formComment->createView(),
+        ]);
     }
 
     /**

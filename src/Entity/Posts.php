@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\PostsRepository;// no lo borres pendejo que sino no andan los repositorios
+
+use App\Repository\PostsRepository; // no lo borres pendejo que sino no andan los repositorios
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -92,12 +93,12 @@ class Posts
         return $this;
     }
 
-    public function getFechaPublicacion(): ?\DateTimeInterface
+    public function getFechaPublicacion(): ?\DateTime
     {
         return $this->fecha_publicacion;
     }
 
-    public function setFechaPublicacion(\DateTimeInterface $fecha_publicacion): self
+    public function setFechaPublicacion(\DateTime $fecha_publicacion): self
     {
         $this->fecha_publicacion = $fecha_publicacion;
 

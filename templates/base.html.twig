@@ -21,10 +21,14 @@
                     <a class="nav-link" href="{{path('posts')}}">Create Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{path('verPost',{'id':3})}}">My posts</a>
+                    <a class="nav-link" href="{{path('verPost',{'id':3})}}">My
+                        posts</a>
                 </li>
             </ul>
         </nav>
+        {% endblock %}
+        {% block javascript %}
+        <script src="{{asset('assets/jquery/jquery-3.5.1.min.js')}}"></script>
         {% endblock %}
     </body>
 </html>
