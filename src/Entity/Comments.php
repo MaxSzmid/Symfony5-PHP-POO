@@ -23,7 +23,7 @@ class Comments
     private $comment;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
     private $date_publication;
 
@@ -33,9 +33,10 @@ class Comments
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Posts", inversedBy="comentarios")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Posts", inversedBy="comments")
      */
-    private $posts;
+    private $post;
+
 
     public function getId(): ?int
     {
@@ -85,15 +86,22 @@ class Comments
         $this->post = $post;
     }
 
-    public function getDatePublication(): ?\DateTimeInterface
+    public function getDatePublication(): ?string
     {
         return $this->date_publication;
     }
 
-    public function setDatePublication(\DateTimeInterface $date_publication): self
+    public function setDatePublication(string $date_publication): self
     {
         $this->date_publication = $date_publication;
 
         return $this;
+    }
+
+    public function generateDate(): ?string
+    {
+        date_default_timezone_set('America/Argentina/Cordoba');
+        $date = date('Y-m-d H:i:s');
+        return $date;
     }
 }

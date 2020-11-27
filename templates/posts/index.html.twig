@@ -1,56 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{parent()}} Posts{% endblock %}
-
-{% block body %} {{parent()}}
-<div class="container">
-
-
-
-    <br>
-    <!-- Para que no crashee cuando lo cargamos desde otro controllador-->
-    {{ form_start(form) }}
-    {{form_row(form.titulo, {'attr':{'class':'form-control'}
-    })}}
-    <div class="d-flex justify-content-center flex-direction">
-        {{form_label(form.contenido, 'Now you can write an article and post it
-        into
-        the website')}}
-    </div><br>
-    {{form_widget(form.contenido, {'attr':{'class':'form-control',
-    'rows':'5'}})}}
-    {% if form_errors(form.foto) %}
-    <div class="alert alert-danger my-3">
-        {{form_errors(form.foto)}}
-    </div>
-    {% endif %}
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Upload</span>
-        </div>
-        <div class="custom-file">
-            {{form_widget(form.foto,
-            {'attr':
-            {'class': 'custom-file-input', 'type': 'file',
-            'id':'inputFile'} })
-            }}
-
-            {{form_label(form.foto, 'load a picture in PNG or JPG',
-            {'label_attr':
-            {'class':'custom-file-label', 'for': 'inputFile'}
-            })
-            }}
-        </div>
-    </div>
-    {{form_row(form.guardar)}}
-    {{ form_end(form) }}
-</div>
+{% block title %}
+	{{parent()}}
+	Posts
 {% endblock %}
-{% block javascript %}{{parent()}}
-<script>
-        $('.custom-file-input').on('change',function(){
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName)
-          })
-     </script>
+
+{% block body %}
+	{{parent()}}
+	<div class="container">
+		<br>
+		{{ form_start(form) }}
+		<div class="d-flex justify-content-center flex-direction">
+			{{form_label(form.titulo, "Title of the article")}}
+		</div>
+		{{form_widget(form.titulo, {'attr':{'class':'form-control'}
+            })}}
+		<div class="d-flex justify-content-center flex-direction" style="padding-top:2%;">
+			{{form_label(form.contenido, 'Now you can write an article and post it
+            into
+            the website')}}
+		</div>
+		{{form_widget(form.contenido, {'attr':{'class':'form-control',
+            'rows':'18'}})}}
+		{% if form_errors(form.foto) %}
+			<div class="alert alert-danger my-3">
+				{{form_errors(form.foto)}}
+			</div>
+		{% endif %}
+		<div class="input-group mb-3 my-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Upload</span>
+			</div>
+			<div class="custom-file">
+				{{form_widget(form.foto,
+                {'attr': {'class': 'custom-file-input', 'type': 'file','id':'inputFile'}})}}
+				{{form_label(form.foto, 'load a picture in PNG or JPG',{'label_attr': {'class':'custom-file-label', 'for': 'inputFile'}})}}
+			</div>
+		</div>
+
+		{{form_row(form.guardar, {'attr':{'class': 'btn btn-primary btn-block'}})}}
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
+{% block javascript %}
+	{{parent()}}
+	<h1></h1>
+	<script>
+		$('.custom-file-input').on('change', function () {
+var fileName = $(this).val().split("\\").pop();
+$(this).siblings(".custom-file-label").addClass("selected").html(fileName)
+})
+	</script>
 {% endblock %}

@@ -46,12 +46,9 @@ class PostsRepository extends ServiceEntityRepository
             'SELECT p.id, p.titulo, p.likes, p.foto, p.fecha_publicacion, p.contenido, u.name 
              FROM App:Posts p
              JOIN p.user u
-             WHERE p.id='."$id"
+             WHERE p.id=' . "$id"
         )->execute();
     }
-
-
-
     // /**
     //  * @return Posts[] Returns an array of Posts objects
     //  */

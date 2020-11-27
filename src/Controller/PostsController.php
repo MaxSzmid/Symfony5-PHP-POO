@@ -49,9 +49,7 @@ class PostsController extends AbstractController
                     throw new Exception("Algo salio mal y exploto todo");
                 }
                 $post->setFoto($newFileName);
-                $date = date_create();
-                $cadena_fecha_actual = date_create_from_format($date, 'Y-m-d H:i:s');
-                $post->setFechaPublicacion($cadena_fecha_actual);
+                $post->setFechaPublicacion($post->generateDate());
             }
             $user = $this->getUser();
             $post->setUser($user);
@@ -78,9 +76,27 @@ class PostsController extends AbstractController
         $formComment->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
         $postQueryResults = $em->getRepository(Posts::class)->getPost($id);
+        $currentPost = $em->getRepository(Posts::class)->find($id);
+        if ($formComment->isSubmitted() && $formComment->isValid()) {
+            //save new comment
+            $idPost = array(
+                'id' => $id
+            );
+            // GetPost devuelve un array, esta devuelvo un objeto.
+            $comment->setComment($formComment->get('comment')->getData());
+            $comment->setPosts($currentPost);
+            $comment->setUser($this->getUser());
+            $comment->setDatePublication($comment->generateDate());
+            $em->persist($comment);
+            $em->flush();
+            return $this->redirectToRoute('verPost', $idPost);
+        }
+        // Find all comments
+        $allComments = $em->getRepository(Comments::class)->findAllPosts($id);
         return $this->render('posts/verPost.html.twig', [
             'post' => $postQueryResults,
-            'form' => $formComment->createView(),
+            'formComment' => $formComment->createView(),
+            'allComments' => $allComments,
         ]);
     }
 

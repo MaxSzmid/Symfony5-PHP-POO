@@ -27,8 +27,9 @@ class PostsType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'application/jpg',
-                            'application/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/png',
                         ],
                         'mimeTypesMessage' => 'Please Upload an archive such as .jpg o .png extension, we can not ulpolad your archive',
                         'maxSizeMessage' => 'El archivo es demasiado grande para poder guardarlo, el tamaño maximo es de 1024k.'

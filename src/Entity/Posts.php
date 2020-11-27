@@ -33,7 +33,7 @@ class Posts
     private $foto;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
     private $fecha_publicacion;
 
@@ -43,9 +43,9 @@ class Posts
     private $contenido;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="posts")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="post")
      */
-    private $comentarios;
+    private $comments;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
@@ -93,12 +93,12 @@ class Posts
         return $this;
     }
 
-    public function getFechaPublicacion(): ?\DateTime
+    public function getFechaPublicacion(): ?string
     {
         return $this->fecha_publicacion;
     }
 
-    public function setFechaPublicacion(\DateTime $fecha_publicacion): self
+    public function setFechaPublicacion(string $fecha_publicacion): self
     {
         $this->fecha_publicacion = $fecha_publicacion;
 
@@ -137,5 +137,12 @@ class Posts
     public function setComments($comments): void
     {
         $this->comments = $comments;
+    }
+
+    public function generateDate(): ?string
+    {
+        date_default_timezone_set('America/Argentina/Cordoba');
+        $date = date('Y-m-d H:i:s');
+        return $date;
     }
 }

@@ -19,6 +19,16 @@ class CommentsRepository extends ServiceEntityRepository
         parent::__construct($registry, Comments::class);
     }
 
+    public function findAllPosts($id)
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT c.comment, c.date_publication, u.name
+             FROM App:Comments c
+             JOIN c.user u
+             WHERE c.post =' . "$id"
+        )->execute();
+    }
+
     // /**
     //  * @return Comments[] Returns an array of Comments objects
     //  */
