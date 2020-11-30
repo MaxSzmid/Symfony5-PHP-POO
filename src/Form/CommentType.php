@@ -17,7 +17,6 @@ class CommentType extends AbstractType
         $builder
             ->add('comment', TextareaType::class, [
                 'label' => 'Comments',
-                //'label_attr' => ['class' => 'label'],
                 'attr' => [
                     'placeholder' => 'Write new commentary',
                     'class' => 'form-control',
@@ -25,7 +24,7 @@ class CommentType extends AbstractType
             ])
             ->add('Submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary my-2 btn-lg',
+                    'class' => 'btn btn-dark my-2',
                 ]
             ]);
     }

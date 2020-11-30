@@ -1,28 +1,49 @@
 {% extends 'base.html.twig' %}
-{% block body %} {{parent()}}
+{% block body %}
+	{{parent()}}
 
-<div class="container">
-    <div class="col-12">
-        <div class="card">
-            {% for p in post %}
-            <div class="card-header bg-secondary text-white">Post Owner:
-                {{p.name}} <span
-                    class="float-right">Date: {{p.fecha_publicacion | date}}</span></div>
-            <div class="card-body bg-light">
-                <h5 class="card-title">{{p.titulo}}</h5>
-                <p class="card-text">- {{p.contenido}}</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    <hr class="my-3">
-
-    <div class="col-12">
-        <h2> {{form(formComment)}}</h2>
-    </div>
-    <ul>
-     
-          {{ dump(allComments) }}
-    </ul>
-</div>
+	<div class="container container-background">
+		<div class="col-12">
+			<div class="card">
+				{% for p in post %}
+					<div class="card-header bg-secondary text-white">Post Owner:
+						{{p.name}}
+						<span class="float-right">Date:
+							{{p.fecha_publicacion | date}}</span>
+					</div>
+					<div class="card-body bg-light">
+						<h5 class="card-title">{{p.titulo}}</h5>
+						<p class="card-text">-
+							{{p.contenido}}</p>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<hr class="my-3 col-10">
+		<div class="col-12">
+			<h2>
+				{{form(formComment)}}
+				</h2>
+		</div>
+		<div class="col-12">
+			<ul>
+				{% if allComments %}
+					{% for comment in allComments %}
+						<div class="media p-2 col-11 bg-light  border">
+							<img src="{{asset('assets/img/user.png')}}" class="mr-3 rounded small-img" alt="">
+							<div class="media-body">
+								<div class="row">
+									<h5 class="mt-0 col-9">{{comment.name}}</h5>
+									<p class="col-3 float-right">Date:
+										{{comment.date_publication}}</p>
+								</div>
+								<p>-
+									{{comment.comment}}</p>
+							</div>
+						</div><br>
+					{% endfor %}
+				{% endif %}
+			</ul>
+		</div>
+	</div>
 {% endblock %}

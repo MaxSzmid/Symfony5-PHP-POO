@@ -1,0 +1,18 @@
+body {
+    background-image: url("../img/vintage-flower-background.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+.container-background { 
+    background: rgb(255, 255, 255); 
+    min-height: 100vh; 
+   }
+.container{
+    padding-left: none;
+    padding-right: none;
+}
+.small-img{
+    width: 50px; height: 50px;
+  }

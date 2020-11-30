@@ -7,44 +7,45 @@
 
 {% block body %}
 	{{parent()}}
-	<div class="container">
-		<br>
-		{{ form_start(form) }}
-		<div class="d-flex justify-content-center flex-direction">
-			{{form_label(form.titulo, "Title of the article")}}
-		</div>
-		{{form_widget(form.titulo, {'attr':{'class':'form-control'}
+	<div class="container container-background">
+		<div class="col-12">
+			<br>
+			{{ form_start(form) }}
+			<div class="d-flex justify-content-center flex-direction m-3">
+				<h5>{{form_label(form.titulo, "Title of the article")}}</h5>
+			</div>
+			{{form_widget(form.titulo, {'attr':{'class':'form-control text-center'}
             })}}
-		<div class="d-flex justify-content-center flex-direction" style="padding-top:2%;">
-			{{form_label(form.contenido, 'Now you can write an article and post it
+			<div class="d-flex justify-content-center flex-direction" style="padding-top:2%;">
+				<h6>{{form_label(form.contenido, 'Now you can write an article and post it
             into
-            the website')}}
-		</div>
-		{{form_widget(form.contenido, {'attr':{'class':'form-control',
+            the website')}}</h6>
+			</div>
+			{{form_widget(form.contenido, {'attr':{'class':'form-control',
             'rows':'18'}})}}
-		{% if form_errors(form.foto) %}
-			<div class="alert alert-danger my-3">
-				{{form_errors(form.foto)}}
-			</div>
-		{% endif %}
-		<div class="input-group mb-3 my-3">
-			<div class="input-group-prepend">
-				<span class="input-group-text">Upload</span>
-			</div>
-			<div class="custom-file">
-				{{form_widget(form.foto,
+			{% if form_errors(form.foto) %}
+				<div class="alert alert-danger my-3">
+					{{form_errors(form.foto)}}
+				</div>
+			{% endif %}
+			<div class="input-group mb-3 my-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Upload</span>
+				</div>
+				<div class="custom-file">
+					{{form_widget(form.foto,
                 {'attr': {'class': 'custom-file-input', 'type': 'file','id':'inputFile'}})}}
-				{{form_label(form.foto, 'load a picture in PNG or JPG',{'label_attr': {'class':'custom-file-label', 'for': 'inputFile'}})}}
+					{{form_label(form.foto, 'load a picture in PNG or JPG',{'label_attr': {'class':'custom-file-label', 'for': 'inputFile'}})}}
+				</div>
 			</div>
-		</div>
 
-		{{form_row(form.guardar, {'attr':{'class': 'btn btn-primary btn-block'}})}}
-		{{ form_end(form) }}
+			{{form_row(form.guardar, {'attr':{'class': 'btn btn-primary btn-block'}})}}
+			{{ form_end(form) }}
+		</div>
 	</div>
 {% endblock %}
 {% block javascript %}
 	{{parent()}}
-	<h1></h1>
 	<script>
 		$('.custom-file-input').on('change', function () {
 var fileName = $(this).val().split("\\").pop();
