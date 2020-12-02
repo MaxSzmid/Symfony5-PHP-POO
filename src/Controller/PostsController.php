@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostsController extends AbstractController
 {
@@ -34,7 +36,7 @@ class PostsController extends AbstractController
                 // slugger crea una url en base al nombre del arichivo original
                 $safeFileName = $slugger->slug($originalFileName);
                 //uniqid genera un id unico, guessExtension pregunta la extension del archivo que se subio
-                $newFileName = $safeFileName . "-" . uniqid() . "-" . $uploadedPDF->guessExtension();
+                $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedPDF->guessExtension();
 
 
                 try {
@@ -49,7 +51,7 @@ class PostsController extends AbstractController
                     throw new Exception("Algo salio mal y exploto todo");
                 }
                 $post->setFoto($newFileName);
-                $post->setFechaPublicacion($post->generateDate());
+                $post->setfecha_publicacion($post->generateDate());
             }
             $user = $this->getUser();
             $post->setUser($user);
@@ -58,14 +60,11 @@ class PostsController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('dashboard');
         }
-
         return $this->render('posts/index.html.twig', [
             'controller_name' => 'PostsController',
             'form' => $form->createView(),
         ]);
     }
-
-
     /**
      * @Route("/verPost/{id}", name="verPost")
      */
@@ -101,7 +100,7 @@ class PostsController extends AbstractController
     }
 
     /**
-     * @Route("/misPosts", name="misPosts")
+     * @Route("/myPosts", name="myPosts")
      */
     public function misPosts()
     {
@@ -109,5 +108,34 @@ class PostsController extends AbstractController
         $user = $this->getUser();
         $posts = $em->getRepository(Posts::class)->findBy(['user' => $user]);
         return $this->render('posts/misPosts.html.twig', ['userPosts' => $posts]);
+    }
+
+    /**
+     * @Route("/likes", name="likes")
+     */
+    public function likes(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $id = $request->request->get('id');
+            $user = $this->getUser();
+            $post = $em->getRepository(Posts::class)->find($id);
+            $likes = $post->getLikes();
+            $likes .= $user->getId() . ",";
+            $post->setLikes($likes);
+            $statusMessage = "";
+            try {
+                $post->setLikes($likes);
+                $em->flush();
+                $statusMessage = '<p class="text-success like-text"><i id="likeColorButton" class="material-icons" style="color:green;">thumb_up_alt</i> 
+                You liked it. <br>Thanks for that! I hope you enjoyed the post.</p>';
+            } catch (\Throwable $th) {
+                $statusMessage = '<div class="alert alert-danger">
+                <p class="text-dark">
+                    We cant save your like please reload this page and try again, if the problem persist, contact suport...</p>
+            </div>';
+            }
+            return new Response($statusMessage);
+        }
     }
 }

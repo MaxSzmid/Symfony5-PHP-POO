@@ -1,3 +1,38 @@
 {% extends 'base.html.twig' %}
-
-
+{% block title %}
+	{{parent()}}
+	My Posts
+{% endblock %}
+{% block body %}
+	{{parent()}}
+	<div class="container container-background">
+		<div class="row row-cols-1 row-cols-md-3 col-12">
+			{% for ups in userPosts %}
+				<div class="col mb-4">
+					<div class="card h-100">
+						<img src="{{asset('uploads/photos/'~ ups.foto)}}" class="card-img-top p-3 rounded-circle" alt="...">
+						<span class="row justify-content-center">
+							<i class="material-icons">thumb_up_alt</i> Likes: 
+							{% if ups.likes %}
+								{{ups.likes}}
+							{% else %}
+								{{0}}
+							{% endif %}
+						</span>
+						<div class="card-body">
+							<h5 class="card-title text-truncate">{{ups.titulo}}</h5>
+							<p class="card-text text-truncate">{{ups.contenido}}</p>
+						</div>
+						<div class="card-footer">
+							<small class="text-muted">
+								Published in:
+								<span class="float-right">{{ups.fecha_publicacion | date('Y/m/d: h-m') }}
+								</span>
+							</small>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

@@ -57,11 +57,6 @@ class User implements UserInterface
      */
     private $posts;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Profession", mappedBy="user")
-     */
-    private $profesion;
-
     public function __construct()
     {
         $this->banned = false;

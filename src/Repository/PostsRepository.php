@@ -47,7 +47,7 @@ class PostsRepository extends ServiceEntityRepository
              FROM App:Posts p
              JOIN p.user u
              WHERE p.id=' . "$id"
-        )->execute();
+        )->setMaxResults(1)->getOneOrNullResult();
     }
     // /**
     //  * @return Posts[] Returns an array of Posts objects

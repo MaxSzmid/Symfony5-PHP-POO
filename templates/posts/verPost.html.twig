@@ -1,22 +1,40 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+	{{parent()}}
+	this post!
+{% endblock %}
 {% block body %}
 	{{parent()}}
-
+	{% set userLikes = post.likes | split(",") %}
 	<div class="container container-background">
 		<div class="col-12">
 			<div class="card">
-				{% for p in post %}
-					<div class="card-header bg-secondary text-white">Post Owner:
-						{{p.name}}
-						<span class="float-right">Date:
-							{{p.fecha_publicacion | date}}</span>
-					</div>
-					<div class="card-body bg-light">
-						<h5 class="card-title">{{p.titulo}}</h5>
-						<p class="card-text">-
-							{{p.contenido}}</p>
-					</div>
-				{% endfor %}
+				<div class="card-header bg-secondary text-white">Post Owner:
+					{{post.name}}
+					<span class="float-right">Date:
+						{{post.fecha_publicacion | date}}</span>
+				</div>
+				<div class="card-body bg-light">
+					<h5 class="card-title">{{post.titulo}}</h5>
+					<p class="card-text text-justify">-
+						{{post.contenido}}</p>
+					{% if app.user.id in userLikes %}
+						<div id="liked">
+							<p class="text-success like-text">
+								<i id="likeColorButton" class="material-icons" style="color:green;">thumb_up_alt</i>
+								You liked it.
+								<br>Thanks for that! I hope you enjoyed the post</p>
+						</div>
+					{% else %}
+						<div id="unliked">
+							<p>Do you like the article? Give me a like!</p>
+							<a type="button" id="likeButton" onclick="like();">
+								<i id="likeColorButtonRemove" class="material-icons">thumb_up_alt</i>
+							</a>
+						</div>
+					{% endif %}
+
+				</div>
 			</div>
 		</div>
 		<hr class="my-3 col-10">
@@ -24,10 +42,9 @@
 			<h2>
 				{{form(formComment)}}
 				</h2>
-		</div>
-		<div class="col-12">
-			<ul>
-				{% if allComments %}
+			</div>
+			<div class="col-12">
+				<ul>
 					{% for comment in allComments %}
 						<div class="media p-2 col-11 bg-light  border">
 							<img src="{{asset('assets/img/user.png')}}" class="mr-3 rounded small-img" alt="">
@@ -42,8 +59,25 @@
 							</div>
 						</div><br>
 					{% endfor %}
-				{% endif %}
-			</ul>
+				</ul>
+			</div>
 		</div>
 	</div>
+	{% block javascript %}
+		{{parent()}}
+		<script>
+			function like() {
+$.ajax({
+type: "POST",
+url: "{{ path('likes') }}",
+data: {
+id:'{{ post.id }}'
+},
+success: function (resp) {
+$('#unliked').html(resp);
+}
+});
+}
+		</script>
+	{% endblock %}
 {% endblock %}

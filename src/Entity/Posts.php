@@ -93,12 +93,12 @@ class Posts
         return $this;
     }
 
-    public function getFechaPublicacion(): ?string
+    public function getfecha_publicacion(): ?string
     {
         return $this->fecha_publicacion;
     }
 
-    public function setFechaPublicacion(string $fecha_publicacion): self
+    public function setfecha_publicacion(string $fecha_publicacion): self
     {
         $this->fecha_publicacion = $fecha_publicacion;
 
