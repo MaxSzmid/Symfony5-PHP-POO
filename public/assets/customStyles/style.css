@@ -1,10 +1,10 @@
 body {
     background-image: url("../img/vintage-flower-background.jpg");
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background-position: center center;
+    background-repeat: no-repeat; 
     background-attachment: fixed;
+    background-size: cover;   
 }
-
 .container-background { 
     background: rgb(255, 255, 255); 
     min-height: 100vh; 
@@ -20,13 +20,36 @@ body {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: rgba(0, 0, 0, 0.74);
+	background-color: rgba(78, 76, 76, 0.74);
 }
-/* limit the max number of characters*/
-.ttext-limit {
-  display:block; 
-  width: 270px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+/*Form login styles*/
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

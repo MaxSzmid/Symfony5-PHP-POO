@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{parent()}}Your activity!
+{% endblock %}
+
+{% block body %}
+	{{parent()}}
+	<div></div>
+		<div class="shadow-lg mt-5 p-3 ml-5 mb-4 mr-5 bg-white rounded">
+			<p class="text-center">Welcome to you activity, here you could see all posts in witch you left a comment.
+				If you want to come back on any post, you can do it making click on the list.</p>
+		</div>
+	</div>
+	<div>
+		<div>
+			<div class="row">
+				<div class="col-2"></div>
+				<div class="list-group col-8">
+					{% for ac in activity %}
+						<a href="{{path('verPost',{id:ac.postId})}}" class="list-group-item list-group-item-action">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">{{ac.titulo}}</h5>
+								<small>{{ac.date | date('y /n /j : h.s')}}</small>
+							</div>
+							<p class="mb-1 text-truncate">- Your comment:
+								{{ac.comment}}</p>
+							<small>You commented in
+								<span class="badge badge-pill badge-dark">{{ac.cuantityOfComments}}</span>
+								occasion/s</small>
+						</a>
+						<br>
+					{% endfor %}
+				</div>
+				<div class="col-2"></div>
+			</div>
+		</div>
+	{% endblock %}

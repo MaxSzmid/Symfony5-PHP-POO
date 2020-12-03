@@ -29,6 +29,19 @@ class CommentsRepository extends ServiceEntityRepository
         )->execute();
     }
 
+    public function findCommentActivity($id)
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT p.titulo, p.id as postId, Count(p.id) as cuantityOfComments, c.date_publication as date, c.comment
+             FROM App:Comments c
+             JOIN c.post p
+             WHERE c.user=' . $id . '
+             GROUP BY p.id
+             ORDER BY c.date_publication DESC'
+
+
+        )->execute();
+    }
     // /**
     //  * @return Comments[] Returns an array of Comments objects
     //  */
@@ -41,7 +54,7 @@ class CommentsRepository extends ServiceEntityRepository
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            
         ;
     }
     */
