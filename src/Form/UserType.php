@@ -19,7 +19,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class)
             ->add('name')
-            ->add("registrar", SubmitType::class);
+            ->add("register", SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

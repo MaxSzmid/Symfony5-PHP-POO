@@ -1,21 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RegisterController!{% endblock %}
+{% block title %}Register!
+{% endblock %}
+{% block stylesheet %}
+	{{parent()}}
+	<style>
+		html,
+		body {
+			height: 100%;
+		}
+		body {
+			display: -ms-flexbox;
+			display: flex;
+			-ms-flex-align: center;
+			align-items: center;
+			padding-top: 40px;
+			padding-bottom: 40px;
+			background-color: #f5f5f5;
+		}
+	</style>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    {% for message in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ message }}
-    </div>
-    {% endfor %}
-    
-    {{ form(form) }}
-</div>
+	<body class="text-center" id="loginBody">
+
+
+		<div class="card form-signin">
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success">
+					{{ message }}
+				</div>
+			{% endfor %}
+			{{form_start(form)}}
+			<h1 class="h3 mb-3 font-weight-normal">Welcome, here you can register</h1>
+			{{form_label(form.email, "Enter you email")}}
+			{{form_widget(form.email,  {'attr': {'class': 'form-control text-center', 'type': 'email','id':'inputName'}})}}
+			{{form_label(form.name, "Enter you name")}}
+			{{form_widget(form.name,  {'attr': {'class': 'form-control text-center', 'type': 'email','id':'inputName'}})}}
+			{{form_label(form.password, "Enter the password")}}
+			{{form_widget(form.password,  {'attr': {'class': 'form-control text-center', 'type': 'password','id':'password', 'requiered': 'true'}})}}
+			{{form_label(form.register, "Enter you email")}}
+			{{form_widget(form.register,  {'attr': {'class': 'btn btn-primary text-center', 'type': 'submit','id':'idSubmit'}})}}
+			{{form_end(form)}}
+		</div>
+
+	</body>
 {% endblock %}
