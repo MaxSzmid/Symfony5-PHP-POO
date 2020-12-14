@@ -8,19 +8,23 @@
 	<div class="container container-background">
 		<div class="row row-cols-1 row-cols-md-3 col-12">
 			{% for ups in userPosts %}
+				{% set likes = ups.likes|split(',') %}
 				<div class="col mb-4">
 					<div class="card h-100">
 						<img src="{{asset('uploads/photos/'~ ups.foto)}}" class="card-img-top p-3 rounded-circle" alt="...">
 						<span class="row justify-content-center">
-							<i class="material-icons">thumb_up_alt</i> Likes: 
+							<i class="material-icons">thumb_up_alt</i>
+							Likes:
 							{% if ups.likes %}
-								{{ups.likes}}
+								{{likes|length -1}}
 							{% else %}
 								{{0}}
 							{% endif %}
 						</span>
 						<div class="card-body">
-							<h5 class="card-title text-truncate">{{ups.titulo}}</h5>
+							<a href="{{path('verPost',{id:ups.id})}}">
+								<h5 class="card-title text-truncate">{{ups.titulo}}</h5>
+							</a>
 							<p class="card-text text-truncate">{{ups.contenido}}</p>
 						</div>
 						<div class="card-footer">
